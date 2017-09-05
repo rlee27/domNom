@@ -69,7 +69,7 @@
 
 const DOMNodeCollection = __webpack_require__(1);
 
-$d = (arg) => {
+$d = function (arg) {
   const funcs = [];
 
   if (typeof arg === "string") {
@@ -80,14 +80,14 @@ $d = (arg) => {
   } else if (arg instanceof HTMLElement) {
     return new DOMNodeCollection([arg]);
 
-  } else {
+  } else if (typeof arg === "function"){
     document.addEventListener("DOMContentLoaded", arg);
   }
 };
 
 window.$d = $d;
 
-window.$d.extend = function (target, obj1, ...objs) {
+$d.extend = function (target, obj1, ...objs) {
   if (!objs) {
     objs = [];
   }
@@ -104,35 +104,37 @@ window.$d.extend = function (target, obj1, ...objs) {
   return target;
 };
 
-window.$d.ajax = function(option) {
-  const xhr = new XMLHttpRequest();
-  if (!option) {
-    option = {};
-  }
-  const defaults = {
-    url: "/",
-    method: "GET",
-    contentType: "JSON",
-    data: {},
-    success: () => console.log(xhr.status),
-    error: () => console.log("There was an error")
-  };
-  const request = $d.extend(defaults, option);
-  xhr.open(request.method, request.url);
-  xhr.onload = function () {
-    if (xhr.status === 200) {
-      request.success(JSON.parse(xhr.response));
-    } else if (xhr.status > 399) {
-      request.error();
-    }
+$d.ajax = function(options = {}) {
+  return new Promise(function(resolve, reject) {
+    const defaults = {
+      url: "/",
+      method: "GET",
+      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+      data: {},
+      success: () => {},
+      error: () => {},
+    };
 
-    // return JSON.parse(xhr.response);
-  };
+    const xhr = new XMLHttpRequest();
+    const request = $d.extend(defaults, options);
+    request.method = request.method.toUpperCase();
 
-  xhr.send(request.data);
+    xhr.open(request.method, request.url);
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        request.success(xhr.response);
+        resolve(xhr.response);
+      } else {
+        request.error(xhr.response);
+        reject(xhr.response);
+      }
+    };
+
+    xhr.send(JSON.stringify(request.data));
+  });
 };
 
-// $d( () => alert('the document is ready'));
+window.$d.ajax = $d.ajax;
 
 
 /***/ }),
@@ -178,13 +180,13 @@ class DOMNodeCollection {
     }
   }
 
-  attr(attribute, value) {
+  attr(attributeName, value) {
     if (typeof value === "string") {
       this.domEls.forEach( (el) => {
-        el.setAttribute(attribute, value);
+        el.setAttribute(attributeName, value);
       });
     } else {
-      return this.domEls[0].getAttribute(attribute);
+      return this.domEls[0].getAttribute(attributeName);
     }
   }
 

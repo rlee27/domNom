@@ -37,13 +37,13 @@ class DOMNodeCollection {
     }
   }
 
-  attr(attribute, value) {
+  attr(attributeName, value) {
     if (typeof value === "string") {
       this.domEls.forEach( (el) => {
-        el.setAttribute(attribute, value);
+        el.setAttribute(attributeName, value);
       });
     } else {
-      return this.domEls[0].getAttribute(attribute);
+      return this.domEls[0].getAttribute(attributeName);
     }
   }
 

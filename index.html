@@ -3,29 +3,25 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <script type="text/javascript" src='./src/dom_nom.js'>
-
+    <!-- <script type="text/javascript" src='./src/dom_nom.js'>
+    </script> -->
+    <script type="text/javascript" src='./demo/dom_nom_demo.js'>
     </script>
   </head>
   <body>
+    <h1 class="date-container">
+      Today is <span class="day"></span> <span class="date"></span>
+    </h1>
 
-    <ul class="unordered-list" attr="length-2">
-      <li class='item-one'>1</li>
-      <li class='item-two'>2</li>
+    <form class="to-do-form" action="index.html" method="post">
+      <label for="to-do-input">What needs to be done today?</label>
+      <input class="to-do-text" type="text" name="to-do-input" value="">
+      <button class="to-do-submit" type="button" name="button">Add</button>
+    </form>
+    <h3>
+      Your Todos:
+    </h3>
+    <ul class="to-do-list-container">
     </ul>
-    <ul class="unordered-list-2">
-      <li id='item-one-2'>1</li>
-      <li id='item-two-2'>2</li>
-    </ul>
-    <div class="random-div random-class here">
-      <p>Inside random-div</p>
-    </div>
-    <div class="random-div-2 random-class here">
-      <p>Inside random-div-2</p>
-    </div>
-    <div class="random-div-3 random-class here">
-      <p>Inside random-div-3</p>
-    </div>
-
   </body>
 </html>

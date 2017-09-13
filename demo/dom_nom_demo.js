@@ -142,7 +142,7 @@ $d(() => {
   // DEMOS THE AJAX CALL, WITH PROMISE, ALSO APPEND FUNCTION
   $d.ajax({
     url: 'http://calapi.inadiutorium.cz/api/v0/en/calendars/default/today',
-    contentType: 'JSON',
+    contentType: 'JSONP',
   }).then((res) => {
     $d(".day").append(JSON.parse(res).weekday);
     $d(".date").append(JSON.parse(res).date);

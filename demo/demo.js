@@ -1,4 +1,4 @@
-const DOMNodeCollection = require('./dom_node_collection');
+const DOMNodeCollection = require('../src/dom_node_collection');
 
 $d = function (arg) {
   const funcs = [];

@@ -187,10 +187,10 @@ $d(() => {
 
   // DEMOS THE AJAX CALL, WITH PROMISE, ALSO APPEND FUNCTION
   $d.ajax({
-    url: 'https://www.metaweather.com/api/location/2347591/',
-    contentType: 'JSON',
+    url: "http://ron-swanson-quotes.herokuapp.com/v2/quotes",
+    contentType: 'JSONP',
   }).then((res) => {
-    $d(".weather").append(JSON.parse(res).weekday);
+    $d(".quote").append(`"${JSON.parse(res)[0]}"`);
   });
 
   $d(".day").append(days[date.getDay()]);

@@ -68,16 +68,65 @@ $d.ajax = function(options = {}) {
 window.$d.ajax = $d.ajax;
 
 // DEMO CODE STARTS HERE
+const months = {
+  1: "January",
+  2: "February",
+  3: "March",
+  4: "April",
+  5: "May",
+  6: "June",
+  7: "July",
+  8: "August",
+  9: "September",
+  10: "October",
+  11: "November",
+  12: "December",
+};
+
+const days = {
+  1: "Sunday",
+  2: "Monday",
+  3: "Tuesday",
+  4: "Wednesday",
+  5: "Thursday",
+  6: "Friday",
+  7: "Saturday",
+};
+
+const ending = {
+  0: "th",
+  1: "st",
+  2: "nd",
+  3: "rd",
+  4: 'th'
+};
+
+const date = new Date();
+
+function addEnding () {
+  const calDate = date.getDate();
+  if (calDate < 5) {
+    return ending[calDate];
+  } else if (calDate >= 5 && calDate < 21) {
+    return ending[4];
+  } else {
+    return ending[calDate % 5];
+  }
+}
+
 $d(() => {
 
   // DEMOS THE AJAX CALL, WITH PROMISE, ALSO APPEND FUNCTION
   $d.ajax({
-    url: 'http://calapi.inadiutorium.cz/api/v0/en/calendars/default/today',
-    contentType: 'JSONP',
+    url: 'https://www.metaweather.com/api/location/2347591/',
+    contentType: 'JSON',
   }).then((res) => {
-    $d(".day").append(JSON.parse(res).weekday);
-    $d(".date").append(JSON.parse(res).date);
+    $d(".weather").append(JSON.parse(res).weekday);
   });
+
+  $d(".day").append(days[date.getDay()]);
+  $d(".month").append(`${months[date.getMonth()]}`);
+  $d(".date").append(`${date.getDate()}${addEnding()}`);
 
   // DEMOS EVENT HANDLER
   $d(".to-do-submit").on('click', (e) => {
@@ -89,5 +138,8 @@ $d(() => {
 });
 
 const createTodo = (value) => {
-  return $d(".to-do-list-container").append(`<li>${value}</li>`);
+  $d(".to-do-list-container").append(`<li class="todo-item">${value}</li>`);
+  $d(".todo-item").on('click', (e) => {
+      $d(e.target).addClass("done");
+    });
 };

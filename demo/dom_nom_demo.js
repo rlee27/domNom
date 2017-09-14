@@ -187,7 +187,7 @@ $d(() => {
 
   // DEMOS THE AJAX CALL, WITH PROMISE, ALSO APPEND FUNCTION
   $d.ajax({
-    url: "http://ron-swanson-quotes.herokuapp.com/v2/quotes",
+    url: "https://ron-swanson-quotes.herokuapp.com/v2/quotes",
     contentType: 'JSONP',
   }).then((res) => {
     $d(".quote").append(`"${JSON.parse(res)[0]}"`);
